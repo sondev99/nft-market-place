@@ -1,19 +1,18 @@
-'use client';
+"use client";
 
-import userApi from '@/apis/userApi';
-import MaxWidthWrapper from '@/components/MaxWidthWrapper';
-import NullData from '@/components/NullData';
-import { DataTable } from '@/components/Table';
-import { GridColDef } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
-import avatar from '@/img/avatar.jpg';
-import { useUser } from '@/store/useUser';
+import userApi from "@/apis/userApi";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import NullData from "@/components/NullData";
+import { DataTable } from "@/components/Table";
+import { GridColDef } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import { useUser } from "@/store/useUser";
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90 },
+  { field: "id", headerName: "ID", width: 90 },
   {
-    field: 'img',
-    headerName: 'Avatar',
+    field: "img",
+    headerName: "Avatar",
     width: 100,
     renderCell: (params) => {
       return (
@@ -21,7 +20,7 @@ const columns: GridColDef[] = [
           className="rounded-full w-10 h-10 overflow-hidden"
           src={
             params.row.img ||
-            'https://avatar.iran.liara.run/public/boy?username=Ash'
+            "https://avatar.iran.liara.run/public/boy?username=Ash"
           }
           alt=""
         />
@@ -29,34 +28,34 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: 'firstName',
-    type: 'string',
-    headerName: 'First name',
+    field: "firstName",
+    type: "string",
+    headerName: "First name",
     width: 150,
   },
   {
-    field: 'lastName',
-    type: 'string',
-    headerName: 'Last name',
+    field: "lastName",
+    type: "string",
+    headerName: "Last name",
     width: 150,
   },
   {
-    field: 'email',
-    type: 'string',
-    headerName: 'Email',
+    field: "email",
+    type: "string",
+    headerName: "Email",
     width: 200,
   },
   {
-    field: 'phone',
-    type: 'string',
-    headerName: 'Phone',
+    field: "phone",
+    type: "string",
+    headerName: "Phone",
     width: 120,
   },
   {
-    field: 'blocked',
-    headerName: 'Blocked',
+    field: "blocked",
+    headerName: "Blocked",
     width: 100,
-    type: 'boolean',
+    type: "boolean",
   },
 ];
 
@@ -74,13 +73,13 @@ const UserManagement = () => {
           console.log(response.data);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
 
-  if (!userInfo || userInfo.role !== 'ADMIN') {
+  if (!userInfo || userInfo.role !== "ADMIN") {
     return <NullData title="Oops! Access denied" />;
   }
 

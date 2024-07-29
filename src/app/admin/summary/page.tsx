@@ -1,0 +1,104 @@
+"use client";
+
+import summaryApi from "@/apis/summaryApi";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { formatNumber } from "@/lib/formatNumber";
+import { formatPrice } from "@/lib/formatPrice";
+import React, { useEffect, useState } from "react";
+
+type SummaryDataType = {
+  [key: string]: {
+    lable: string;
+    digit: number;
+  };
+};
+
+const SummaryPage = () => {
+  const [summaryData, setSummaryData] = useState<SummaryDataType>({
+    users: {
+      lable: "Total Users",
+      digit: 0,
+    },
+    transaction: {
+      lable: "Total Transactions",
+      digit: 0,
+    },
+    traidingVolume: {
+      lable: "Trading Volume",
+      digit: 0,
+    },
+    totalNftSold: {
+      lable: "Total Nft sold",
+      digit: 0,
+    },
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await summaryApi.getSummary();
+        if (response.code === 200) {
+          const sumaryData = {
+            users: {
+              lable: "Total Users",
+              digit: response.data.totalUser,
+            },
+            transaction: {
+              lable: "Total Transactions",
+              digit: response.data.totalTransaction,
+            },
+            traidingVolume: {
+              lable: "Total Transactions",
+              digit: response.data.traidingVolume,
+            },
+            totalNftSold: {
+              lable: "Total Nft Sold",
+              digit: response.data.totalNftSold,
+            },
+          };
+
+          setSummaryData(sumaryData);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const summaryKeys = Object.keys(setSummaryData);
+
+  return (
+    <>
+      <MaxWidthWrapper>
+        <div>
+          <h1>Summary</h1>
+        </div>
+        <div>
+          <div className="grid grid-cols-2 gap-3 max-h-50vh overflow-y-auto">
+            {summaryKeys &&
+              summaryKeys.map((key) => {
+                return (
+                  <div
+                    key={key}
+                    className="rounded-xl border-2 p-4 flex flex-col items-center gap-2 transition"
+                  >
+                    <div className="text-xl md:text-4xl font-bold">
+                      {summaryData[key].lable === "Trading Volume" ? (
+                        <>{formatPrice(summaryData[key].digit)}</>
+                      ) : (
+                        <>{formatNumber(summaryData[key].digit)}</>
+                      )}
+                    </div>
+                    <div className="">{summaryData[key].lable}</div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </MaxWidthWrapper>
+    </>
+  );
+};
+
+export default SummaryPage;
