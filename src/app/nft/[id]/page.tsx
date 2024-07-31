@@ -1,53 +1,69 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import useSWR from 'swr';
-import Head from 'next/head';
+import React from "react";
+import { useRouter } from "next/navigation";
+import useSWR from "swr";
+import Head from "next/head";
 import {
   IoArrowBack,
   IoArrowBackCircle,
   IoArrowUpCircle,
   IoHome,
-} from 'react-icons/io5';
-import toast from 'react-hot-toast';
-import { ethers } from 'ethers';
-import { useWeb3Store } from '@/store/web3Store';
-import BackButton from '@/components/Button/BackButton';
-import Button, { ButtonPreset } from '@/components/Button/Button';
-import Loading from '@/components/Loading';
-import MaxWidthWrapper from '@/components/MaxWidthWrapper';
-import NullData from '@/components/NullData';
-import Image from 'next/image';
-import { CategoryIcon } from '@/icon';
-import { FaRegHeart } from 'react-icons/fa';
-import { IoIosArrowDown } from 'react-icons/io';
-import { CiMenuKebab } from 'react-icons/ci';
-import Link from 'next/link';
-import images from '@/img';
-import routes from '@/routes';
-import { truncateText } from '@/utils/truncatText';
-import { getMarketplaceNFTById } from '@/utils/web3/marketplace';
+} from "react-icons/io5";
+import toast from "react-hot-toast";
+import { ethers } from "ethers";
+import { useWeb3Store } from "@/store/web3Store";
+import BackButton from "@/components/Button/BackButton";
+import Button, { ButtonPreset } from "@/components/Button/Button";
+import Loading from "@/components/Loading";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import NullData from "@/components/NullData";
+import Image from "next/image";
+import { CategoryIcon } from "@/icon";
+import { FaRegHeart } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import { CiMenuKebab } from "react-icons/ci";
+import Link from "next/link";
+import images from "@/img";
+import routes from "@/routes";
+import { truncateText } from "@/utils/truncatText";
+import { getMarketplaceNFTById } from "@/utils/web3/marketplace";
+import transactionApi from "@/apis/transactionApi";
+import { TransactionRequest } from "@/type/transactions";
+import moment from "moment";
+import { useUser } from "@/store/useUser";
+import axios from "axios";
 
 type PageProps = {
   id: number;
 };
 
 function NftDetailPage({ params }: { params: PageProps }) {
+  const now = moment();
   const router = useRouter();
   const id = params.id;
-  const GET_MARKET_NFT = 'getMarketNFT';
+  const GET_MARKET_NFT = "getMarketNFT";
 
   const { isInit, marketplaceContract, walletAddress } = useWeb3Store();
+
+  const { userInfo } = useUser();
 
   const { data: nftData, isValidating } = useSWR(
     isInit && [GET_MARKET_NFT, id],
     ([GET_MARKET_NFT, id]) => getMarketplaceNFTById(GET_MARKET_NFT, id)
   );
 
+  const { data: ethPrice } = useSWR(isInit && ["getEthPrice"], () =>
+    axios
+      .get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+      )
+      .then((res) => res.data.ethereum.usd)
+  );
+
   const onBuyClicked = async () => {
     if (!nftData || !marketplaceContract) {
-      toast.error('NFT not found, please try again later');
+      toast.error("NFT not found, please try again later");
       return;
     }
 
@@ -62,16 +78,26 @@ function NftDetailPage({ params }: { params: PageProps }) {
         .buyItem(parseInt(id as string), {
           value: ethers.utils.parseEther(nftData.price),
         })
-        .then((res) => res.wait()),
+        .then((res: any) => res.wait()),
       {
-        loading: 'Buying NFT...',
+        loading: "Buying NFT...",
         success: () => {
           router.push(`/my-nft/${nftData.tokenId}`);
+
+          const transactionRequset: TransactionRequest = {
+            nftId: nftData.tokenId,
+            quantity: 1,
+            price: ethPrice * nftData.price,
+            transactionDate: now.toDate(),
+            walletAddress: walletAddress,
+            userId: userInfo?.id,
+          };
+          transactionApi.createTransaction(transactionRequset);
 
           return `NFT id ${nftData.tokenId} bought successfully`;
         },
         error: (e) => {
-          return e.reason || e.message || 'Error buying NFT';
+          return e.reason || e.message || "Error buying NFT";
         },
       }
     );
@@ -80,7 +106,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
   return (
     <MaxWidthWrapper>
       <Head>
-        <title>{nftData?.name || 'Loading...'}</title>
+        <title>{nftData?.name || "Loading..."}</title>
       </Head>
       <div className="sticky top-10 left-20 my-3">
         <BackButton />
@@ -95,7 +121,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
               >
                 <Image
                   fill
-                  src={nftData?.image || ''}
+                  src={nftData?.image || ""}
                   className="object-cover w-full h-full"
                   alt="nc-imgs"
                 />
@@ -235,7 +261,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
                           : ButtonPreset.Fill
                       }
                     >
-                      <span>{nftData.isSold ? 'Sold' : 'Buy'}</span>
+                      <span>{nftData.isSold ? "Sold" : "Buy"}</span>
                     </Button>
                   )}
                 </div>
