@@ -15,7 +15,7 @@ interface UserInfo {
 
   walletAddress: string;
 
-  addresses: Address[];
+  addresses: Address;
 }
 
 interface Address {
