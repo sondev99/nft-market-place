@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   BarElement,
@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import summaryApi from '@/apis/summaryApi';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -18,15 +19,33 @@ interface BarGraphProps {
 }
 
 type GrapData = {
-  day: string;
+  dayOfWeek: string;
   date: string;
-  totalAmount: number;
+  volume: number;
 };
 
-const BarGraph = ({ data }: BarGraphProps) => {
-  const labels = data.map((item) => item.day);
+const BarGraph = () => {
+  const [data, setData] = useState<GrapData[]>([]);
 
-  const amounts = data.map((item) => item.totalAmount);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await summaryApi.getTradingVolume7Day();
+        if (response.code === 200) {
+          setData(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log(data);
+
+  const labels = data?.map((item) => item.dayOfWeek);
+
+  const amounts = data?.map((item) => item.volume);
 
   const chartData = {
     labels: labels,

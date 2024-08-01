@@ -69,8 +69,6 @@ const SummaryPage = () => {
 
   const summaryKeys = Object.keys(summaryData);
 
-  console.log('Summary', summaryKeys);
-
   return (
     <>
       <div className="py-5 text-center font-bold text-lg">
@@ -99,7 +97,7 @@ const SummaryPage = () => {
         </div>
       </div>
       <div className="mt-4 mx-auto ">
-        <BarGraph data={} />
+        <BarGraph />
       </div>
     </>
   );

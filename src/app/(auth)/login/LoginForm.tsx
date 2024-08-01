@@ -44,7 +44,7 @@ const LoginForm = () => {
     setLoading(true);
     try {
       const response = await authApi.login(values);
-      console.log(response.data.userInfo);
+      console.log(response);
 
       if (response.code === 200) {
         Cookies.set('accessToken', response.data.accessToken, { expires: 100 });
@@ -57,7 +57,7 @@ const LoginForm = () => {
         router.push('/');
         router.refresh();
       } else {
-        toast.error(response.message);
+        toast.error(response.data.errorMessage);
       }
     } catch (error: any) {
       handleErrorApi({
