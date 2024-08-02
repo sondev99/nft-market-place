@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 import {
   TiSocialFacebook,
   TiSocialLinkedin,
@@ -10,71 +10,15 @@ import {
   TiSocialInstagram,
   TiArrowSortedDown,
   TiArrowSortedUp,
-} from 'react-icons/ti';
-import { RiSendPlaneFill } from 'react-icons/ri';
-import images from '@/img';
-import FooterList from './FooterList';
-import MaxWidthWrapper from '../MaxWidthWrapper';
+} from "react-icons/ti";
+import { RiSendPlaneFill } from "react-icons/ri";
+import images from "@/img";
+import FooterList from "./FooterList";
+import MaxWidthWrapper from "../MaxWidthWrapper";
+import Chatbot from "../ChatBot";
 
 const Footer = () => {
   return (
-    // <MaxWidthWrapper>
-    //   <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700 " />
-    //   <div className="grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10 p-10 border-solid">
-    //     <div className="">
-    //       <Image src={images.logo} alt="footer logo" height={100} width={100} />
-    //       <p>
-    //         The world’s first and largest digital marketplace for crypto
-    //         collectibles and non-fungible tokens (NFTs). Buy, sell, and discover
-    //         exclusive digital items.
-    //       </p>
-
-    //       <div className="flex gap-2 items-center">
-    //         <a href="#">
-    //           <TiSocialFacebook />
-    //         </a>
-    //         <a href="#">
-    //           <TiSocialLinkedin />
-    //         </a>
-    //         <a href="#">
-    //           <TiSocialTwitter />
-    //         </a>
-    //         <a href="#">
-    //           <TiSocialYoutube />
-    //         </a>
-    //         <a href="#">
-    //           <TiSocialInstagram />
-    //         </a>
-    //       </div>
-    //     </div>
-
-    //     <div className="">
-    //       <h3>Discover</h3>
-    //       {/* <Discover /> */}
-    //     </div>
-
-    //     <div className="">
-    //       <h3>Help Center</h3>
-    //       {/* <HelpCenter /> */}
-    //     </div>
-
-    //     <div className="">
-    //       <h3>Subscribe</h3>
-
-    //       {/* <div className={Style.subscribe_box}>
-    //           <input type="email" placeholder="Enter your email *" />
-    //           <RiSendPlaneFill className={Style.subscribe_box_send} />
-    //         </div>
-    //         <div className={Style.subscribe_box_info}>
-    //           <p>
-    //             Discover, collect, and sell extraordinary NFTs OpenSea is the
-    //             world first and largest NFT marketplace
-    //           </p>
-    //         </div> */}
-    //     </div>
-    //   </div>
-    //   <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-    // </MaxWidthWrapper>
     <MaxWidthWrapper>
       <footer className=" text-sm mt-16">
         <hr className=" border-gray-200 sm:mx-auto dark:border-gray-700 " />
@@ -159,7 +103,7 @@ const Footer = () => {
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between mb-6">
           <span className="text-sm  sm:text-center dark:text-gray-400">
-            © {new Date().getFullYear()}{' '}
+            © {new Date().getFullYear()}{" "}
             <Link href="https://flowbite.com/" className="hover:underline">
               Flowbite™
             </Link>
@@ -259,6 +203,7 @@ const Footer = () => {
             </Link>
           </div>
         </div>
+        <Chatbot />
       </footer>
     </MaxWidthWrapper>
   );
