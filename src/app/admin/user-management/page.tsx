@@ -52,7 +52,13 @@ const columns: GridColDef[] = [
     width: 120,
   },
   {
-    field: "blocked",
+    field: "enabled",
+    headerName: "Enabled",
+    width: 100,
+    type: "boolean",
+  },
+  {
+    field: "locked",
     headerName: "Blocked",
     width: 100,
     type: "boolean",
@@ -61,13 +67,18 @@ const columns: GridColDef[] = [
 
 const UserManagement = () => {
   const [data, setData] = useState<UserInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { userInfo } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const response = await userApi.getAllUser();
         if (response.code === 200) {
+          setIsLoading(false);
+
           setData(response.data);
 
           console.log(response.data);
@@ -78,10 +89,6 @@ const UserManagement = () => {
     };
     fetchData();
   }, []);
-
-  if (!userInfo || userInfo.role !== "ADMIN") {
-    return <NullData title="Oops! Access denied" />;
-  }
 
   return (
     <>
@@ -106,15 +113,10 @@ const UserManagement = () => {
           </div>
         </div>
         <div className="mt-5 rounded-xl">
-          {data.length === 0 ? (
+          {data.length === 0 && isLoading ? (
             <NullData title="DON'T HAVE ANY USER YET" />
           ) : (
-            <DataTable
-              slug="user"
-              columns={columns}
-              rows={data}
-              // editBtn={editBanner}
-            />
+            <DataTable slug="user" columns={columns} rows={data} />
           )}
         </div>
       </div>

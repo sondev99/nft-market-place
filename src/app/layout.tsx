@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserLogin from "@/components/AuthLogin";
 import Chatbot from "@/components/ChatBot";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -50,6 +51,7 @@ export default async function RootLayout({
         )}
       >
         <Toaster />
+
         <main className="relative flex flex-col min-h-screen">
           <Web3Provider>
             <UserLogin>
@@ -69,6 +71,7 @@ export default async function RootLayout({
           </Web3Provider>
         </main>
       </body>
+
     </html>
   );
 }

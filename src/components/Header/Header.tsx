@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { Menu } from 'lucide-react';
-import { useTheme } from 'next-themes';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { FaRegMoon, FaWallet } from 'react-icons/fa';
-import { IoSunnyOutline } from 'react-icons/io5';
+import { Menu } from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FaRegMoon, FaWallet } from "react-icons/fa";
+import { IoSunnyOutline } from "react-icons/io5";
 
-import images from '@/img';
-import routes from '@/routes';
-import { useUser } from '@/store/useUser';
-import { useWeb3Store } from '@/store/web3Store';
-import Image from 'next/image';
-import SearchInput from '../Input/SearchInput';
-import MaxWidthWrapper from '../MaxWidthWrapper';
-import ProfileButton from '../ProfileButton';
-import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import Navbar from './Navbar';
-import { useEffect } from 'react';
+import images from "@/img";
+import routes from "@/routes";
+import { useUser } from "@/store/useUser";
+import { useWeb3Store } from "@/store/web3Store";
+import Image from "next/image";
+import SearchInput from "../Input/SearchInput";
+import MaxWidthWrapper from "../MaxWidthWrapper";
+import ProfileButton from "../ProfileButton";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import Navbar from "./Navbar";
+import { useEffect } from "react";
 
 export interface Navigation {
   href: string;
@@ -34,6 +34,8 @@ const Header = () => {
   const { connect, isConnected, walletAddress, disconnect } = useWeb3Store();
   const { userInfo, isLogined } = useUser();
 
+  console.log("user", userInfo?.walletAddress);
+
   const { getCurrentUser } = useUser();
 
   useEffect(() => {
@@ -42,32 +44,32 @@ const Header = () => {
 
   const categories = [
     {
-      label: 'All',
-      href: '/',
+      label: "All",
+      href: "/",
     },
     {
-      label: 'Art',
-      href: 'art',
+      label: "Art",
+      href: "art",
     },
     {
-      label: 'Gamming',
-      href: 'gamming',
+      label: "Gamming",
+      href: "gamming",
     },
     {
-      label: 'Memberships',
-      href: 'memberships',
+      label: "Memberships",
+      href: "memberships",
     },
     {
-      label: 'PFPd',
-      href: 'pfpd',
+      label: "PFPd",
+      href: "pfpd",
     },
     {
-      label: 'Photography',
-      href: 'photography',
+      label: "Photography",
+      href: "photography",
     },
     {
-      label: 'Music',
-      href: 'mucsic',
+      label: "Music",
+      href: "mucsic",
     },
   ];
 
@@ -113,7 +115,7 @@ const Header = () => {
                   variant="ghost"
                   size="icon"
                   aria-label="Toggle Theme"
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 >
                   <IoSunnyOutline className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                   <FaRegMoon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -145,13 +147,17 @@ const Header = () => {
                       </div>
                     ) : (
                       <>
-                        <Button
-                          variant="outline"
-                          className="rounded-full"
-                          onClick={() => connect()}
-                        >
-                          Connect
-                        </Button>
+                        {!userInfo.walletAddress ? (
+                          <></>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            className="rounded-full"
+                            onClick={() => connect()}
+                          >
+                            Connect
+                          </Button>
+                        )}
                       </>
                     )}
                     <div className="ml-2">

@@ -75,7 +75,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
     toast.promise(
       marketplaceContract
         .connect(signer)
-        .buyItem(parseInt(id as string), {
+        .buyItem(parseInt(id as unknown as string), {
           value: ethers.utils.parseEther(nftData.price),
         })
         .then((res: any) => res.wait()),

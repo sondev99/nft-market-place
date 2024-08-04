@@ -7,6 +7,9 @@ const transactionApi = {
   createTransaction: (data: TransactionRequest) => {
     return axiosClient.post(`${url}`, data);
   },
+  getAllTransaction: () => {
+    return axiosClient.get(`${url}`);
+  },
 };
 
 export default transactionApi;
