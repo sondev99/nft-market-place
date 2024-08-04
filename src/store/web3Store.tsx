@@ -58,7 +58,7 @@ export const useWeb3Store = create<Web3ModelStore>()(
 
           if (
             response.data.walletAddress !== walletAddress ||
-            response.data.walletAddress !== ''
+            response.data.walletAddress === ''
           ) {
             Swal.fire({
               title: 'Error !!!',

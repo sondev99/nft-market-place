@@ -1,49 +1,49 @@
-"use client";
+'use client';
 
-import transactionApi from "@/apis/transactionApi";
-import NullData from "@/components/NullData";
-import { DataTable } from "@/components/Table";
-import { TransactionDto } from "@/type/transactions";
-import { GridColDef } from "@mui/x-data-grid";
-import React, { useEffect, useState } from "react";
+import transactionApi from '@/apis/transactionApi';
+import NullData from '@/components/NullData';
+import { DataTable } from '@/components/Table';
+import { TransactionDto } from '@/type/transactions';
+import { GridColDef } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 90 },
+  { field: 'id', headerName: 'ID', width: 90 },
   {
-    field: "nftId",
-    headerName: "NftId",
+    field: 'nftId',
+    headerName: 'NftId',
     width: 50,
-    type: "number",
+    type: 'number',
   },
   {
-    field: "quantity",
-    type: "number",
-    headerName: "Quantity",
-    width: 50,
+    field: 'quantity',
+    type: 'number',
+    headerName: 'Quantity',
+    width: 80,
   },
   {
-    field: "price",
-    type: "string",
-    headerName: "Price",
-    width: 50,
-  },
-  {
-    field: "transactionDate",
-    type: "string",
-    headerName: "Date",
+    field: 'price',
+    type: 'string',
+    headerName: 'Price ($)',
     width: 100,
   },
   {
-    field: "walletAddress",
-    type: "string",
-    headerName: "Wallet Address",
+    field: 'transactionDate',
+    type: 'string',
+    headerName: 'Date',
+    width: 100,
+  },
+  {
+    field: 'walletAddress',
+    type: 'string',
+    headerName: 'Wallet Address',
     width: 150,
   },
   {
-    field: "userId",
-    headerName: "User Id",
+    field: 'userId',
+    headerName: 'User Id',
     width: 150,
-    type: "string",
+    type: 'string',
   },
 ];
 const TransactionManagement = () => {
@@ -57,12 +57,13 @@ const TransactionManagement = () => {
         const response = await transactionApi.getAllTransaction();
         if (response.code === 200) {
           setIsLoading(false);
+
           setData(response.data);
 
           console.log(response.data);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
     fetchData();

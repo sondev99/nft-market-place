@@ -84,7 +84,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
           if (event) {
             const listingId = event!.args![0]!.toString();
 
-            router.push(`/nft/${listingId}`);
+            router.push('/');
           }
 
           return 'Item listed successfully. Item sell at ' + price + ' ETH';

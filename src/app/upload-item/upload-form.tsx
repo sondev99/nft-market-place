@@ -37,6 +37,7 @@ type Product = ProductResType['data'];
 
 const UploadForm = ({ product }: { product?: Product }) => {
   // const { uploadToPinata, createNft } = useContext(AppContext);
+  const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +50,6 @@ const UploadForm = ({ product }: { product?: Product }) => {
     resolver: zodResolver(CreateProductBody),
     defaultValues: {
       name: product?.name ?? '',
-      price: product?.price ?? 0,
       description: product?.description ?? '',
       image: product?.image ?? '',
     },
@@ -85,13 +85,10 @@ const UploadForm = ({ product }: { product?: Product }) => {
   ];
 
   const onSubmit = async (values: CreateProductBodyType) => {
-    console.log('sdfsadfasdfsd');
-
     setIsLoading(true);
 
     const nftId = await createNft(
       values.name,
-      values.price,
       values.image || '',
       values.description,
       category,
@@ -100,9 +97,9 @@ const UploadForm = ({ product }: { product?: Product }) => {
 
     console.log('nftId: ' + nftId);
     setIsLoading(false);
-  };
 
-  console.log(isLoading);
+    router.push(`/my-nft`);
+  };
 
   return (
     <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">

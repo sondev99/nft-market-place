@@ -2,7 +2,6 @@ import z from 'zod';
 
 export const CreateProductBody = z.object({
   name: z.string().min(1).max(256),
-  price: z.coerce.number().positive(),
   description: z.string().max(10000),
   image: z.string().url(),
 });
@@ -12,7 +11,6 @@ export type CreateProductBodyType = z.TypeOf<typeof CreateProductBody>;
 export const ProductSchema = z.object({
   id: z.number(),
   name: z.string(),
-  price: z.number(),
   description: z.string(),
   image: z.string(),
   createdAt: z.date(),

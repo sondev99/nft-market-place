@@ -24,11 +24,11 @@ const SummaryPage = () => {
       lable: 'Total Transactions',
       digit: 0,
     },
-    traidingVolume: {
+    totalTradingVolume: {
       lable: 'Trading Volume',
       digit: 0,
     },
-    totalNftSold: {
+    totalNft: {
       lable: 'Total Nft sold',
       digit: 0,
     },
@@ -50,11 +50,11 @@ const SummaryPage = () => {
             },
             traidingVolume: {
               lable: 'Trading Volume',
-              digit: response.data.traidingVolume,
+              digit: response.data.totalTradingVolume,
             },
             totalNftSold: {
               lable: 'Total Nft Sold',
-              digit: response.data.totalNftSold,
+              digit: response.data.totalNft,
             },
           };
 

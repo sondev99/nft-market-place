@@ -96,13 +96,12 @@ export const uploadToPinata = async (file: File) => {
 //-- CREATE NFT
 export const createNft = async (
   name: string,
-  price: number,
   image: any,
   description: string,
   category: string,
   nftContract: any
 ) => {
-  if (!name || !description || !price || !image || !category) {
+  if (!name || !description || !image || !category) {
     return console.log('Data is missing');
   }
 
