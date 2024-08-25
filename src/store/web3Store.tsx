@@ -112,6 +112,7 @@ export const useWeb3Store = create<Web3ModelStore>()(
         });
 
         const accounts = await provider.listAccounts();
+        console.log(accounts);
 
         if (accounts?.length > 0 && get().keepDisconnect === false) {
           set({

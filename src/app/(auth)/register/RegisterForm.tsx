@@ -38,6 +38,12 @@ const RegisterForm = (props: RegisterFormProps) => {
 
   const handleRegister = async (data: any) => {
     let { confirm_password, ...newUser } = data;
+    console.log(confirm_password, newUser.password);
+
+    // if (confirm_password !== newUser.password) {
+    //   toast.error('password not match');
+    //   return;
+    // }
     setIsLoading(true);
     const response = await authApi.register(newUser);
     console.log(response);
@@ -61,7 +67,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   };
   return (
     <>
-      <Heading title="Sign up for E-Shop" center />
+      <Heading title="Sign up for NFT MarketPlace" center />
       <hr className="bg-slate-300 w-full h-px" />
       <form
         className="space-y-4 md:space-y-6"
@@ -138,7 +144,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             })}
           />
           <div className="mt-1 text-red-600 min-h-[1rem] text-sm">
-            {errors.confirmPassword?.message}
+            {errors.confirm_password?.message?.toString()}
           </div>
         </div>
         <div className="flex items-start">

@@ -45,7 +45,7 @@ const ProfileButton = ({ walletAddress }: ProfileProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={userInfo?.imageUrl} />
+          <AvatarImage src={userInfo?.avatarUrl} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

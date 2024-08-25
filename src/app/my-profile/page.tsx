@@ -24,6 +24,7 @@ import userApi from '@/apis/userApi';
 import { handleErrorApi } from '@/lib/utils';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+import ChangeProfileAvatar from '@/components/ChangeProfileAvatar';
 
 type Props = {};
 
@@ -195,8 +196,8 @@ const MyProfilePage = (props: Props) => {
             </Form>
           </div>
 
-          <div>
-            <div>kjsadhfkj</div>
+          <div className="flex justify-center items-center">
+            <ChangeProfileAvatar userInfo={userInfo} />
           </div>
         </div>
       </MaxWidthWrapper>
