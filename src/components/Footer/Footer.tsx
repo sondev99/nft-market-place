@@ -46,16 +46,10 @@ const Footer = () => {
                 <Link href="#">Gaming</Link>
               </li>
               <li>
-                <Link href="#">Memberships</Link>
+                <Link href="#">Sprots</Link>
               </li>
               <li>
-                <Link href="#">PFPs</Link>
-              </li>
-              <li>
-                <Link href="#">Photography</Link>
-              </li>
-              <li>
-                <Link href="#">Music</Link>
+                <Link href="#">Anime</Link>
               </li>
             </ul>
           </FooterList>
@@ -203,7 +197,6 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-        <Chatbot />
       </footer>
     </MaxWidthWrapper>
   );

@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
-import { useContext, useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { IoMdCheckmark } from 'react-icons/io';
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { useContext, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { IoMdCheckmark } from "react-icons/io";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,26 +14,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
-import images from '@/img';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import images from "@/img";
 import {
   CreateProductBody,
   CreateProductBodyType,
   ProductResType,
-} from '@/schemaValidations/product.schema';
-import { useRouter } from 'next/navigation';
-import { AppContext } from '@/context/app-context';
-import { BiLoaderAlt, BiLoaderCircle } from 'react-icons/bi';
+} from "@/schemaValidations/product.schema";
+import { useRouter } from "next/navigation";
+import { AppContext } from "@/context/app-context";
+import { BiLoaderAlt, BiLoaderCircle } from "react-icons/bi";
 
-import { CgSpinner } from 'react-icons/cg';
-import { createNft, uploadToPinata } from '@/utils/web3/nft';
-import Loading from '@/components/Loading';
-import { useWeb3Store } from '@/store/web3Store';
+import { CgSpinner } from "react-icons/cg";
+import { createNft, uploadToPinata } from "@/utils/web3/nft";
+import Loading from "@/components/Loading";
+import { useWeb3Store } from "@/store/web3Store";
 
-type Product = ProductResType['data'];
+type Product = ProductResType["data"];
 
 const UploadForm = ({ product }: { product?: Product }) => {
   // const { uploadToPinata, createNft } = useContext(AppContext);
@@ -43,44 +43,36 @@ const UploadForm = ({ product }: { product?: Product }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUploadIpfs, setIsUploadIpfs] = useState(false);
   const [active, setActive] = useState(0);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState("");
   const { nftContract } = useWeb3Store();
 
   const form = useForm<CreateProductBodyType>({
     resolver: zodResolver(CreateProductBody),
     defaultValues: {
-      name: product?.name ?? '',
-      description: product?.description ?? '',
-      image: product?.image ?? '',
+      name: product?.name ?? "",
+      description: product?.description ?? "",
+      image: product?.image ?? "",
     },
   });
 
-  const image = form.watch('image');
+  const image = form.watch("image");
 
   const categoryArry = [
     {
-      image: images.nft_image_1,
-      category: 'Sports',
+      image: images.category_sport,
+      category: "Sports",
     },
     {
-      image: images.nft_image_2,
-      category: 'Arts',
+      image: images.category_arts,
+      category: "Arts",
     },
     {
-      image: images.nft_image_3,
-      category: 'Music',
+      image: images.category_anime,
+      category: "Anime",
     },
     {
-      image: images.nft_image_1,
-      category: 'Digital',
-    },
-    {
-      image: images.nft_image_2,
-      category: 'Time',
-    },
-    {
-      image: images.nft_image_3,
-      category: 'Photography',
+      image: images.category_gaming,
+      category: "Gaming",
     },
   ];
 
@@ -89,13 +81,13 @@ const UploadForm = ({ product }: { product?: Product }) => {
 
     const nftId = await createNft(
       values.name,
-      values.image || '',
+      values.image || "",
       values.description,
       category,
       nftContract
     );
 
-    console.log('nftId: ' + nftId);
+    console.log("nftId: " + nftId);
     setIsLoading(false);
 
     router.push(`/my-nft`);
@@ -107,7 +99,7 @@ const UploadForm = ({ product }: { product?: Product }) => {
         <form
           onSubmit={form.handleSubmit(onSubmit, (error) => {
             console.log(error);
-            console.log(form.getValues('image'));
+            console.log(form.getValues("image"));
           })}
           className="space-y-2  flex-shrink-0 w-full"
           noValidate
@@ -214,9 +206,9 @@ const UploadForm = ({ product }: { product?: Product }) => {
               <div className="flex gap-2  overflow-auto py-2 space-x-4">
                 {categoryArry.map((el, i) => (
                   <div
-                    className={`"bg-teal-600 text-white
+                    className={`"bg-teal-600 dark:text-white text-slate-400
                 relative flex-shrink-0 w-44 rounded-xl border border-neutral-200 dark:border-neutral-700 px-6 py-5 cursor-pointer flex focus:outline-none" ${
-                  active == i + 1 ? 'bg-teal-600' : ''
+                  active == i + 1 ? "bg-teal-600" : ""
                 }`}
                     key={i + 1}
                     //@ts-ignore
@@ -231,7 +223,7 @@ const UploadForm = ({ product }: { product?: Product }) => {
                             width={50}
                             height={50}
                             className={
-                              'object-cover w-full h-full rounded-full'
+                              "object-cover w-full h-full rounded-full"
                             }
                           />
                         </div>
@@ -243,8 +235,8 @@ const UploadForm = ({ product }: { product?: Product }) => {
                           <></>
                         )}
                       </div>
-                      <p className="font-semibold mt-3  text-white">
-                        Crypto Legend - {el.category}{' '}
+                      <p className="font-semibold mt-3  dark:text-white text-slate-400">
+                        Crypto Legend - {el.category}{" "}
                       </p>
                     </div>
                   </div>
@@ -259,7 +251,7 @@ const UploadForm = ({ product }: { product?: Product }) => {
                     <CgSpinner />
                   </span>
                 )}
-                {isLoading ? 'Loading...' : 'Upload'}
+                {isLoading ? "Loading..." : "Upload"}
               </Button>
             </div>
           </div>

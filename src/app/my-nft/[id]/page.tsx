@@ -1,34 +1,34 @@
-'use client';
+"use client";
 
-import BackButton from '@/components/Button/BackButton';
-import Button, { ButtonPreset } from '@/components/Button/Button';
-import InputWeb3 from '@/components/Input/InputWeb3';
-import Loading from '@/components/Loading';
-import MaxWidthWrapper from '@/components/MaxWidthWrapper';
-import NullData from '@/components/NullData';
-import { CategoryIcon, MakeOfferIcon, PlaceABidIcon, UploadIcon } from '@/icon';
-import images from '@/img';
-import routes from '@/routes';
-import { useWeb3Store } from '@/store/web3Store';
-import { getNFTById } from '@/utils/web3/nft';
-import { ethers } from 'ethers';
-import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React from 'react';
-import toast from 'react-hot-toast';
-import { CiMenuKebab } from 'react-icons/ci';
-import { FaRegHeart } from 'react-icons/fa';
-import { IoIosArrowDown } from 'react-icons/io';
-import useSWR from 'swr';
+import BackButton from "@/components/Button/BackButton";
+import Button, { ButtonPreset } from "@/components/Button/Button";
+import InputWeb3 from "@/components/Input/InputWeb3";
+import Loading from "@/components/Loading";
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import NullData from "@/components/NullData";
+import { CategoryIcon, MakeOfferIcon, PlaceABidIcon, UploadIcon } from "@/icon";
+import images from "@/img";
+import routes from "@/routes";
+import { useWeb3Store } from "@/store/web3Store";
+import { getNFTById } from "@/utils/web3/nft";
+import { ethers } from "ethers";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
+import toast from "react-hot-toast";
+import { CiMenuKebab } from "react-icons/ci";
+import { FaRegHeart } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import useSWR from "swr";
 
 type PageProps = {
   id: number;
 };
 
 function NftDetailPage({ params }: { params: PageProps }) {
-  const GET_NFT = 'getNFT';
+  const GET_NFT = "getNFT";
   const router = useRouter();
   const id = params.id;
 
@@ -50,12 +50,12 @@ function NftDetailPage({ params }: { params: PageProps }) {
     const price = priceRef.current?.value;
 
     if (!price) {
-      toast.error('Please enter a price');
+      toast.error("Please enter a price");
       return;
     }
 
     if (Number(price) <= 0) {
-      toast.error('Please enter a valid price');
+      toast.error("Please enter a valid price");
       return;
     }
 
@@ -67,27 +67,27 @@ function NftDetailPage({ params }: { params: PageProps }) {
 
     toast.promise(
       marketplaceWithSigner
-        .listItem(nftContract?.address, id as string, priceInWei, {
+        .listItem(nftContract?.address, id as unknown as string, priceInWei, {
           value: listingPrice,
         })
         .then((tx) => tx.wait()),
       {
-        loading: 'Listing item...',
+        loading: "Listing item...",
         success: (val) => {
           mutate();
 
           //"ListingItemCreated"
           const event = val.events?.find(
-            (event) => event.event === 'ListingItemCreated'
+            (event: any) => event.event === "ListingItemCreated"
           );
 
           if (event) {
             const listingId = event!.args![0]!.toString();
 
-            router.push('/');
+            router.push("/");
           }
 
-          return 'Item listed successfully. Item sell at ' + price + ' ETH';
+          return "Item listed successfully. Item sell at " + price + " ETH";
         },
         error: (err) => err.reason,
       }
@@ -103,14 +103,14 @@ function NftDetailPage({ params }: { params: PageProps }) {
 
     toast.promise(
       nftWithSigner
-        .approve(marketplaceContract.address, id as string)
+        .approve(marketplaceContract.address, id as unknown as string)
         .then((tx) => tx.wait()),
       {
-        loading: 'Approving item...',
+        loading: "Approving item...",
         success: () => {
           mutate();
 
-          return 'Item approved successfully';
+          return "Item approved successfully";
         },
         error: (err) => err.reason || err.message,
       },
@@ -124,7 +124,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
     <>
       <MaxWidthWrapper>
         <Head>
-          <title>{nftData?.name || 'Loading...'}</title>
+          <title>{nftData?.name || "Loading..."}</title>
         </Head>
         <div className="sticky top-10 left-20 my-3">
           <BackButton />
@@ -140,7 +140,7 @@ function NftDetailPage({ params }: { params: PageProps }) {
                 >
                   <Image
                     fill
-                    src={nftData?.image || ''}
+                    src={nftData?.image || ""}
                     className="object-cover w-full h-full"
                     alt="nc-imgs"
                   />
